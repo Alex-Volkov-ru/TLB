@@ -26,6 +26,13 @@ class Category(Base):
 
     products = relationship('Product', back_populates='category')
 
+class Income(Base):
+    __tablename__ = 'incomes'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column()
+
+    products = relationship('Product',back_populates='incomes')
 class Product(Base):
     __tablename__ = 'products'
 
@@ -33,9 +40,12 @@ class Product(Base):
     name: Mapped[str] = mapped_column()
     description: Mapped[str] = mapped_column()
     price: Mapped[int] = mapped_column()
+
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'))
+    income_id: Mapped[int] = mapped_column(ForeignKey('incomes.id'))
 
     category = relationship('Category', back_populates='products')
+    incomes = relationship('Income', back_populates='products')
 
 async def async_main():
     async with engine.begin() as conn:

@@ -1,4 +1,4 @@
-from app.database.models import User, Category, Product, async_session
+from app.database.models import User, Category, Product, async_session, Income
 from sqlalchemy import select
 
 
@@ -6,6 +6,13 @@ async def get_categories():
     async with async_session() as session:
         result = await session.scalars(select(Category))
         return result
+
+async def get_incomes():
+    async with async_session() as session:
+        result = await session.scalars(select(Income))
+        return result
+
+
 
 async def get_products(category_id):
     async with async_session() as session:
